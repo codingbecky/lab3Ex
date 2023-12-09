@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--enable thymeleaf-->
+<head>
+  <meta charset="UTF-8">
+  <title>Category Page</title>
+</head>
+<link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+  h1 {
+    text-align: center;
+    background-color: cyan;
+  }
+
+  .btn {
+    width: 100%;
+  }
+</style>
+</head>
+<body><h1>Item Category</h1>
+<script>
+  document.getElementById("mes").innerHTML = "";
+</script>
+<div class="container">
+  <form method="GET">
+    <div class="form-group">
+      <label for="ccode">Category Code:</label>
+<!--      name 是from Category class，value=${id} from modelmap in controller-->
+      <input type="text" name="categoryCode" class="form-control" id="ccode" th:attr="value = ${id}">
+    </div>
+    <div class="form-group">
+      <label for="cdesc">Description:</label>
+      <input type="text" name="categoryDescription" class="form-control" id="cdesc"
+             th:attr="value = ${description}">
+    </div>
+    <a class="btn btn-success" href="add-todo">Add</a>
+  </form>
+  <h1 th:text="${errorMessage}" id="mes">Test</h1>
+  <div class="container2"><h2>Categories</h2>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Category Code</th>
+        <th>Category Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!--/*@thymesVar id="categorylist" type=""*/-->
+<!--      categoryList from model attribute-->
+      <tr th:each="p:${categoryList}">
+        <td th:text="${p.categoryCode}"></td>
+        <td th:text="${p.categoryDescription}"></td>
+        <td><a type="button" class="btn btn-primary"
+               href="update-todo?id=${todo.categoryCode}"
+               th:href="@{update-todo(id=${p.categoryCode})}">Edit</a></td>
+        <td><a type="button" class="btn btn-primary"
+               th:href="@{delete-todo(id=${p.categoryCode})}">Delete</a></td>
+        <td><a type="button" class="btn btn-primary" th:onmouseout="'myFunction()'"
+               th:href="@{see-todo(id=${p.categoryCode})}">Items</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  function myFunction() {
+    document.getElementById("mes").innerHTML = "";
+  }
+</script>
+</body>
+</html>
